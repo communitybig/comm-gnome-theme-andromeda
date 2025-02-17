@@ -33,6 +33,7 @@ post_install() {
         {
             echo org.gnome.shell.extensions.user-theme name \$(gsettings get org.gnome.shell.extensions.user-theme name);
             echo org.gnome.desktop.interface gtk-theme \$(gsettings get org.gnome.desktop.interface gtk-theme);
+	    echo org.gnome.desktop.wm.preferences theme \$(gsettings get org.gnome.desktop.wm.preferences theme);
         } > \"$backup_file\"
     "
 
@@ -50,7 +51,7 @@ post_install() {
             mkdir -p "$dir"
         fi
         # Set correct ownership for GTK directories
-        chown -R "$user:$user" "$dir"      
+        chown -R "$user:$user" "$dir"
     done
     
     # Copy files and set ownership
@@ -68,6 +69,7 @@ post_install() {
         export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$(id -u "$user")/bus;
         gsettings set org.gnome.shell.extensions.user-theme name 'andromeda';
         gsettings set org.gnome.desktop.interface gtk-theme 'andromeda';
+	gsettings set org.gnome.desktop.wm.preferences theme 'andromeda';
 
     "
     # Create symbolic link in user's .config directory pointing to assets
